@@ -8,7 +8,14 @@ import movies from './reducers';
 //create the store
 const store = createStore(movies); //createStore takes reducer as argument
 console.log(store);
-console.log(store.getState()); //to fetch the state details
+console.log('Before STATE', store.getState()); //to fetch the state details
+
+store.dispatch({
+  type: 'ADD_MOVIES',
+  movies: [{name: 'Superman'}]
+});
+
+console.log('After STATE', store.getState());
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
