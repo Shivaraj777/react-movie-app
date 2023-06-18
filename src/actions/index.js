@@ -1,7 +1,7 @@
 //action types
 export const ADD_MOVIES = 'ADD_MOVIES';
-export const ADD_FAVOURITES = 'ADD_FAVOURITES';
-export const REMOVE_FAVOURITES = 'REMOVE_FAVOURITES';
+export const ADD_TO_FAVOURITES = 'ADD_FAVOURITES';
+export const REMOVE_FROM_FAVOURITES = 'REMOVE_FAVOURITES';
 
 //action creators(returns an action)
 export const addMovies = (movies) => {
@@ -12,17 +12,17 @@ export const addMovies = (movies) => {
 }
 
 //add favourites action creator
-export const addFavourites = (movie) => {
+export const addToFavourites = (movie) => {
   return {
-    type: ADD_FAVOURITES,
+    type: ADD_TO_FAVOURITES,
     movie
   }
 }
 
 //remove favouites action creator
-export const removeFavourites = (movie) => {
+export const removeFromFavourites = (movie) => {
   return {
-    type: REMOVE_FAVOURITES,
+    type: REMOVE_FROM_FAVOURITES,
     movie
   }
 }
