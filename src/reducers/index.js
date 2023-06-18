@@ -1,7 +1,9 @@
+import { ADD_MOVIES } from "../actions";
+
 //a reducer function
 export default function movies(state = [], action){
     //if action is found, return updated state
-    if(action.type === 'ADD_MOVIES'){
+    if(action.type === ADD_MOVIES){
         return action.movies;
     }
     return state;
