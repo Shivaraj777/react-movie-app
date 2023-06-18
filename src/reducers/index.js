@@ -1,9 +1,10 @@
-import { ADD_MOVIES, ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from "../actions";
+import { ADD_MOVIES, ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES, SHOW_FAVOURITES } from "../actions";
 
 //set the initial state in store
 const initialState = {
   list: [],
-  favourites: []
+  favourites: [],
+  showFavouritesTab: false
 };
 
 //a reducer function
@@ -29,6 +30,12 @@ export default function movies(state = initialState, action){
       return {
         ...state,
         favourites: updatedFavourites
+      }
+
+    case SHOW_FAVOURITES:
+      return {
+        ...state,
+        showFavouritesTab: action.value
       }
 
     default:
