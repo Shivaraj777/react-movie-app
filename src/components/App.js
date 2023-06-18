@@ -19,15 +19,23 @@ class App extends React.Component{
     //make api call
     //dispatch action(by calling action creator)
     store.dispatch(addMovies(data));
-
-    console.log(store.getState());
   }
 
+  //check if movie is favourite
+  favouriteMovieCheck = (movie) => {
+    const {favourites} = this.props.store.getState();
+
+    //find the index of movie
+    const index = favourites.indexOf(movie);
+
+    return (index === -1) ? false : true;
+  }
 
   render() {
-    const {list} = this.props.store.getState();
+    const {store} = this.props;
+    const {list} = store.getState();
     const movies = list;
-    console.log('RENDER');
+    console.log(store.getState());
 
     return (
       <div className="App">
@@ -38,8 +46,8 @@ class App extends React.Component{
             <div className="tab">Favourites</div>
           </div>
           <div className="list">
-            {movies.map((movie) => 
-              <MovieCard movie={movie} key={movies.indexOf(movie)} />
+            {movies.map((movie, index) => 
+              <MovieCard movie={movie} key={`movie-${index}`} dispatch={store.dispatch} isFavourite={this.favouriteMovieCheck(movie)} />
             )}
           </div>
         </div>
