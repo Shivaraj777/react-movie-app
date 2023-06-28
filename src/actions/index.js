@@ -3,6 +3,7 @@ export const ADD_MOVIES = 'ADD_MOVIES';
 export const ADD_TO_FAVOURITES = 'ADD_FAVOURITES';
 export const REMOVE_FROM_FAVOURITES = 'REMOVE_FAVOURITES';
 export const SHOW_FAVOURITES = 'SHOW_FAVOURITES';
+export const ADD_SEARCH_RESULT = 'ADD_SEARCH_RESULT';
 
 //action creators(returns an action)
 export const addMovies = (movies) => {
@@ -46,10 +47,17 @@ export const handleMovieSearch = (movie) => {
       console.log(movie);
 
       //dispatch an action
-      // dispatch({type: ADD_SEARCH_RESULT, movie});
+      dispatch(addMovieSearchResults(movie));
     });
   }
+}
 
+// action creator to add search results to state
+export function addMovieSearchResults(movie){
+  return {
+    type: ADD_SEARCH_RESULT,
+    movie
+  }
 }
 
 

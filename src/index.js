@@ -26,6 +26,7 @@ const logger = ({dispatch, setState}) => (next) => (action) => {
   next(action);
 }
 
+// Thunk middleware to handle actions dispatch
 // const thunk = ({dispatch, setState}) => (next) => (action) => {
 //   if(typeof action === 'function'){
 //     action(dispatch);

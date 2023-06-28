@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { ADD_MOVIES, ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES, SHOW_FAVOURITES } from "../actions";
+import { ADD_MOVIES, ADD_SEARCH_RESULT, ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES, SHOW_FAVOURITES } from "../actions";
 
 //set the initial state for movies
 const initialMoviesState = {
@@ -46,12 +46,22 @@ export function movies(state = initialMoviesState, action){
 
 //set initial state for search results
 const initialSearchState = {
-  result: {}
+  result: {},
+  showSearchResults: false,
 };
 
 //search reducer function
 export function search(state = initialSearchState, action) {
-  return state;
+  switch(action.type){
+    case ADD_SEARCH_RESULT:
+      return {
+        ...state,
+        result: action.movie,
+        showSearchResults: true
+      }
+    default:
+      return state;
+  }
 }
 
 //set initial state for store(root reducer)

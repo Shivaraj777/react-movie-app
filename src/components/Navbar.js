@@ -5,7 +5,6 @@ export class Navbar extends Component {
   constructor(props){
     super(props);
     this.state = {
-      showSearchResults: true,
       searchText: ''
     };
   }
@@ -31,11 +30,28 @@ export class Navbar extends Component {
   }
 
   render() {
+    const {result, showSearchResults} = this.props.search;
+
     return (
       <div className='nav'>
         <div className='search-container'>
           <input value={this.searchText} onChange={this.handleChange} />
           <button id='search-btn' onClick={this.handleSearch}>Search</button>
+
+          {showSearchResults && 
+            <div className='search-results'>
+              <div className='search-result'>
+                <img src={result.Poster} alt='search-pic' />
+                <div className='movie-info'>
+                  <span>{result.Title}</span>
+                  <button>
+                    Add to Movies
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+
         </div>
       </div>  
     )
