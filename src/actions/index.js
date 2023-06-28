@@ -36,6 +36,23 @@ export const showFavourites = (value) => {
   }
 }
 
+// get the movie from API and dispatch action to display it
+export const handleMovieSearch = (movie) => {
+  const url = `http://www.omdbapi.com/?t=${movie}&apikey=ab956ffa`;
+  return function (dispatch){
+    fetch(url)
+    .then((response) => response.json())
+    .then((movie) => {
+      console.log(movie);
+
+      //dispatch an action
+      // dispatch({type: ADD_SEARCH_RESULT, movie});
+    });
+  }
+
+}
+
+
 // {
 //     type: 'INCREASE_COUNT'
 // }
