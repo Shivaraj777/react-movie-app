@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {handleMovieSearch} from '../actions';
+import {handleAddMovieToList, handleMovieSearch} from '../actions';
 
 export class Navbar extends Component {
   constructor(props){
@@ -9,12 +9,12 @@ export class Navbar extends Component {
     };
   }
 
-  // handleAddToMovies = (movie) => {
-  //   this.props.dispatch(handleAddMovieToList(movie.imdbID));
-  //   this.setState({
-  //     showSearchResults: false,
-  //   });
-  // };
+  handleAddToMovies = (movie) => {
+    this.props.dispatch(handleAddMovieToList(movie.imdbID));
+    this.setState({
+      showSearchResults: false,
+    });
+  };
 
   // search the movie
   handleSearch = () => {
@@ -44,7 +44,7 @@ export class Navbar extends Component {
                 <img src={result.Poster} alt='search-pic' />
                 <div className='movie-info'>
                   <span>{result.Title}</span>
-                  <button>
+                  <button onClick={() => this.handleAddToMovies(result)}>
                     Add to Movies
                   </button>
                 </div>

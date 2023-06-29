@@ -37,8 +37,8 @@ const logger = ({dispatch, setState}) => (next) => (action) => {
 
 //create the store
 const store = createStore(rootReducer, applyMiddleware(logger, thunk)); //createStore takes reducer as argument
-console.log(store);
-console.log('Before STATE', store.getState()); //to fetch the state details
+// console.log(store);
+// console.log('Before STATE', store.getState()); //to fetch the state details
 
 //dispatch the action to be triggerd
 // store.dispatch({
