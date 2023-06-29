@@ -3,6 +3,7 @@ import MovieCard from './MovieCard';
 import Navbar from './Navbar';
 import {data} from '../data';
 import { addMovies, showFavourites } from '../actions';
+import { StoreContext } from '..';
 
 class App extends React.Component{
 
@@ -47,7 +48,7 @@ class App extends React.Component{
 
     return (
       <div className="App">
-        <Navbar search={search} dispatch={store.dispatch} />
+        <Navbar search={search} />
         <div className="main">
           <div className="tabs">
             <div className={`tab ${showFavouritesTab ? '' : 'active-tabs'}`} onClick={() => this.changeTab(false)}>Movies</div>
@@ -65,4 +66,21 @@ class App extends React.Component{
   }
 }
 
-export default App;
+/*
+  class for StoreContext Consumer
+  used to access the store by wrapping the component and
+  passing store through function
+*/
+class AppWrapper extends React.Component{
+  render(){
+    return (
+      <StoreContext.Consumer>
+        {(store) => (
+          <App store={store}></App>
+        )}
+      </StoreContext.Consumer>
+    );
+  }
+}
+
+export default AppWrapper;

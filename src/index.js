@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import './index.css';
@@ -40,6 +40,26 @@ const store = createStore(rootReducer, applyMiddleware(logger, thunk)); //create
 // console.log(store);
 // console.log('Before STATE', store.getState()); //to fetch the state details
 
+//Creating a context for store
+export const StoreContext = createContext();
+console.log(StoreContext);
+
+/* 
+  class for StoreContext Provider 
+  provides access to the store to the component and it's children
+  which it is wrapped around
+*/
+class Provider extends React.Component{
+  render(){
+    const {store} = this.props;
+    return (
+      <StoreContext.Provider value={store}>
+        {this.props.children}
+      </StoreContext.Provider>
+    );
+  }
+}
+
 //dispatch the action to be triggerd
 // store.dispatch({
 //   type: 'ADD_MOVIES',
@@ -51,7 +71,9 @@ const store = createStore(rootReducer, applyMiddleware(logger, thunk)); //create
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App store={store} />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
 

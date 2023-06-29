@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {handleAddMovieToList, handleMovieSearch} from '../actions';
+import { StoreContext } from '..';
 
 export class Navbar extends Component {
   constructor(props){
@@ -9,6 +10,7 @@ export class Navbar extends Component {
     };
   }
 
+  // add searched movie to movies list
   handleAddToMovies = (movie) => {
     this.props.dispatch(handleAddMovieToList(movie.imdbID));
     this.setState({
@@ -58,4 +60,16 @@ export class Navbar extends Component {
   }
 }
 
-export default Navbar;
+class NavbarWrapper extends React.Component{
+  render(){
+    return (
+      <StoreContext.Consumer>
+        {(store) => (
+          <Navbar dispatch={store.dispatch} search={this.props.search} />
+        )}
+      </StoreContext.Consumer>
+    );
+  }
+}
+
+export default NavbarWrapper;
