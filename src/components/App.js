@@ -3,34 +3,27 @@ import MovieCard from './MovieCard';
 import Navbar from './Navbar';
 import {data} from '../data';
 import { addMovies, showFavourites } from '../actions';
-import { StoreContext } from '..';
+import { connect } from '..';
+// import { StoreContext } from '..';
 
 class App extends React.Component{
 
   //fetch the data when component is mounted/created
   componentDidMount() {
-    const {store} = this.props;
-
-    //listen to changes in store state
-    store.subscribe(() => {
-      console.log('UPDATED');
-      this.forceUpdate();  //not recommended to use(forcefully re-render the app component)
-    });
-
     //make api call
     //dispatch action(by calling action creator)
-    store.dispatch(addMovies(data));
+    this.props.dispatch(addMovies(data));
   }
 
   //change the tab
   changeTab = (value) => {
     console.log('Changing....');
-    this.props.store.dispatch(showFavourites(value));
+    this.props.dispatch(showFavourites(value));
   }
 
   //check if movie is favourite
   favouriteMovieCheck = (movie) => {
-    const {movies} = this.props.store.getState();
+    const {movies} = this.props;
     const {favourites} = movies;
 
     //find the index of movie
@@ -40,8 +33,7 @@ class App extends React.Component{
   }
 
   render() {
-    const {store} = this.props;
-    const {movies, search} = store.getState();
+    const {movies, search} = this.props;
     const {list, favourites, showFavouritesTab} = movies;
     const moviesList = showFavouritesTab ? favourites : list;
     // console.log(store.getState());
@@ -56,7 +48,7 @@ class App extends React.Component{
           </div>
           <div className="list">
             {moviesList.map((movie, index) => 
-              <MovieCard movie={movie} key={`movie-${index}`} dispatch={store.dispatch} isFavourite={this.favouriteMovieCheck(movie)} />
+              <MovieCard movie={movie} key={`movie-${index}`} dispatch={this.props.dispatch} isFavourite={this.favouriteMovieCheck(movie)} />
             )}
           </div>
           {moviesList.length === 0 ? <div className='no-movies'>No Movies to display!</div> : null}
@@ -71,16 +63,27 @@ class App extends React.Component{
   used to access the store by wrapping the component and
   passing store through function
 */
-class AppWrapper extends React.Component{
-  render(){
-    return (
-      <StoreContext.Consumer>
-        {(store) => (
-          <App store={store}></App>
-        )}
-      </StoreContext.Consumer>
-    );
+// class AppWrapper extends React.Component{
+//   render(){
+//     return (
+//       <StoreContext.Consumer>
+//         {(store) => (
+//           <App store={store}></App>
+//         )}
+//       </StoreContext.Consumer>
+//     );
+//   }
+// }
+
+//callback function to get particular state from store
+function mapStateToProps(state){
+  return{
+    movies: state.movies,
+    search: state.search
   }
 }
 
-export default AppWrapper;
+//connect App component to redux store
+const ConnectedAppComponent = connect(mapStateToProps)(App);
+
+export default ConnectedAppComponent;

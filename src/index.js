@@ -60,6 +60,50 @@ class Provider extends React.Component{
   }
 }
 
+/* 
+  connect() method to connect a Component to redux store
+*/
+export function connect(callback){
+  return function (Component){
+    class ConnectedComponent extends React.Component{
+      constructor(props){
+        super(props);
+        this.unsunscribe = this.props.store.subscribe(() => this.forceUpdate());
+      }
+
+      // after component gets destroyed
+      componentWillUnmount(){
+        this.unsunscribe();
+      }
+
+      render(){
+        const {store} = this.props;
+        const state = store.getState();
+        const getDataFromStore = callback(state);
+
+        return (
+          <Component {...getDataFromStore} dispatch={store.dispatch} />
+        );
+      }
+    }
+
+    //wrapper for ConnectedComponent to get store data
+    class ConnectedComponentWrapper extends React.Component{
+      render(){
+        return (
+          <StoreContext.Consumer>
+            {(store) => (
+              <ConnectedComponent store={store} />
+            )}
+          </StoreContext.Consumer>
+        );
+      }
+    }
+
+    return ConnectedComponentWrapper;
+  }
+}
+
 //dispatch the action to be triggerd
 // store.dispatch({
 //   type: 'ADD_MOVIES',
